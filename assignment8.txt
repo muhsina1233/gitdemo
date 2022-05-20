@@ -1,0 +1,42 @@
+create database if not exists pokemon;
+
+use pokemon;
+
+drop table if exists pokemon;
+
+--a. create hive table and load Dataset [using Load command]
+
+--create external table if not exists pokemon(id int,name varchar(20),Type1 var$
+Type2 varchar(20), Total int,HP int,Attack int,Defense int, Sp.Atk int, Sp.Def $
+row format delimited
+fields terminated by ','
+lines terminated by '\n'
+tblproperties("skip.header.line.count"="1");
+
+load data local inpath '/home/hadoop/Downloads/pokemon.csv into table pokemon;
+
+--c. find out the average HP(Hit points) of all the Pokemon
+select avg(HP) from pokemon;
+
+--d. create and insert values of the existing table into a new table with an ad$
+create table pokemon_new as select * ,IF(HP>69.25875, 'moderate','powerless')) $
+
+select COUNT(name),power_rate from pokemon_new group by power_rate;
+
+--e. find out the top10 pokemon according to their HP
+select name.hp from pokemon_new order by HP desc limit 10;
+
+--f. find out top 10 pokemon based on their attack stat
+select name.attack from pokemon_new order by Attack desc limit 10;
+
+--g. find out top 15 pokemon based on their defense stat
+select name, Defense from pokemon_new order by Defense desc limit 15;
+
+--h. find out the  top 20 Pokémon based on their total power
+select name, Total from pokemon_new order by Total desc limit 20;
+
+--i. Find out the top 10 Pokémon having a drastic change in their attack and sp$
+select name,('Attack-Sp.Atk') as atk_diff from pokemon_new order by atk_diff li$
+
+--j. Find the top 10 Pokémon having a drastic change in their defence and speci$
+select name, (Defense-Sp.Def) as def_diff from pokemon_new order by def_diff li$
